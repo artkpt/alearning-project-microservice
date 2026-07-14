@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+    /* primitive tokens */
+    
+
+    /* semantic tokens */
+    --color-main: var(--color-white);
+    --color-main-contrast: var(--color-gray-300)
+}
+
+@layer base {
+  body {
+    margin: 0; 
+    padding: 0;
+    background-color: var(--color-main);
+    
+    /* ป้องกันปัญหาการขยายฟอนต์บนมือถือ */
+    -webkit-text-size-adjust: 100%;
+  }
+  #root {
+    @apply w-full min-h-screen;
+    margin: 0; 
+    padding: 0;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}

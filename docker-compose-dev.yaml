@@ -1,0 +1,48 @@
+name: alearning-microservice-dev
+services:
+  note-service:
+    ports:
+      - 3333:3333
+    container_name: note-service
+    networks:
+      - dev-net
+      - backend-dev
+    image: alearning-note-service
+    build:
+      context: .
+      dockerfile: note-service/Dockerfile
+      target: dev
+    depends_on:
+      - note-service-db
+    volumes:
+      - ./note-service/:/app/note-service/
+      - /app/note-service/node_modules/
+  note-service-db:
+    container_name: note-service-db
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_USER=alearning
+      - MYSQL_PASSWORD=alearning
+      - MYSQL_DATABASE=note_app
+    networks:
+      - backend-dev
+    image: mysql:8.0
+
+  web-client:
+    ports:
+      - 5173:5173
+    container_name: web-client
+    networks:
+      - dev-net
+    image: alearning-web-client
+    build:
+      context: .
+      dockerfile: web-client/Dockerfile
+      target: dev
+    volumes:
+      - ./web-client/:/app/web-client/
+      - /app/web-client/node_modules
+
+networks:
+  dev-net:
+  backend-dev:
