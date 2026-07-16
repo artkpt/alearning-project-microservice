@@ -9,7 +9,7 @@ docker compose -f docker-compose-dev.yaml up --build -d
 
 2. เข้าไป init database ผ่าน adonisjs container 
 ```
-docker exec -it note-service sh -c "cd apps/note-service; node ace migration:fresh --seed;"
+docker exec -it note-service sh -c "cd /app/note-service; node ace migration:fresh --seed;"
 ```
 
 3. เข้า demo ผ่าน url: http://localhost:5173

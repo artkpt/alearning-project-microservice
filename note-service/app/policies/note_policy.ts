@@ -1,18 +1,17 @@
-import User from '#models/user'
 import Note from '#models/note'
 import { BasePolicy } from '@adonisjs/bouncer'
-import type { AuthorizerResponse } from '@adonisjs/bouncer/types'
+import { GatewayUser } from '#middleware/context_auth_middleware'
 
 export default class NotePolicy extends BasePolicy {
-    viewPivateNote(user:User, note:Note){
+    viewPivateNote(user:GatewayUser, note:Note){
         return user.id === note.ownerId
     }
 
-    deleteNote(user:User, note:Note){
+    deleteNote(user:GatewayUser, note:Note){
         return user.id === note.ownerId
     }
 
-    editNote(user:User, note:Note){
+    editNote(user:GatewayUser, note:Note){
         return user.id === note.ownerId
     }
 }
