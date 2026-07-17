@@ -28,6 +28,19 @@ services:
       - backend-dev
     image: mysql:8.0
 
+  auth-service-db:
+    container_name: auth-service-db
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_USER=alearning
+      - MYSQL_PASSWORD=alearning
+      - MYSQL_DATABASE=auth_service
+    networks:
+      - backend-dev
+    image: mysql:8.0
+    ports:
+      - 8000:3306
+
   web-client:
     ports:
       - 5173:5173
