@@ -2,6 +2,7 @@ package com.example.alearning.authservice.services;
 
 import com.example.alearning.authservice.dtos.AccessToken;
 import com.example.alearning.authservice.dtos.JwtRequestUser;
+import com.example.alearning.authservice.entities.AuthUserDetail;
 import com.example.alearning.authservice.entities.User;
 import com.example.alearning.authservice.models.TokenType;
 import com.example.alearning.authservice.repositories.UserRepository;
@@ -60,7 +61,12 @@ public class UserService {
         refreshToken.setHttpOnly(true);
         refreshToken.setPath("/auth/refresh-token");
         response.addCookie(refreshToken);
-        return Map.of("access_token", jwtUtils.generateToken(userDetails));
+        return Map.of(
+                "access_token", jwtUtils.generateToken(userDetails),
+                "userId", ((AuthUserDetail) userDetails).getId(),
+                "username", ((AuthUserDetail) userDetails).getUsername(),
+                "role", ((AuthUserDetail) userDetails).getAuthorities()
+        );
     }
 
     public Map<String, Object> refreshToken(String refreshToken) {
