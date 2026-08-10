@@ -13,3 +13,5 @@ docker exec -it note-service sh -c "cd /app/note-service; node ace migration:fre
 ```
 
 3. เข้า demo ผ่าน url: http://localhost:5173
+
+

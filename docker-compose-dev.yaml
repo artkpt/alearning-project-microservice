@@ -17,6 +17,7 @@ services:
     volumes:
       - ./note-service/:/app/note-service/
       - /app/note-service/node_modules/
+
   note-service-db:
     container_name: note-service-db
     environment:
@@ -28,8 +29,29 @@ services:
       - backend-dev
     image: mysql:8.0
 
+#  auth-service:
+#    ports:
+#      - 4000:4000
+#    container_name: auth-service
+#    environment:
+#      - spring_datasource_url=jdbc:mysql://auth-service-db:3306/auth_service
+#      - spring_datasource_username=alearning
+#      - spring_datasource_password=alearning
+#    networks:
+#      - dev-net
+#      - backend-dev
+#    image: alearning-auth-service
+#    build:
+#      context: .
+#      dockerfile: auth-service/Dockerfile
+#    depends_on:
+#      auth-service-db:
+#        condition: service_healthy
+
   auth-service-db:
     container_name: auth-service-db
+    ports:
+      - 8000:3306
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_USER=alearning
@@ -38,8 +60,11 @@ services:
     networks:
       - backend-dev
     image: mysql:8.0
-    ports:
-      - 8000:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "alearning", "-palearning" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   web-client:
     ports:
