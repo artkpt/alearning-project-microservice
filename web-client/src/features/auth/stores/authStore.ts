@@ -3,7 +3,7 @@ import {create} from "zustand"
 interface User{
     userId: number;
     username: string;
-    accessTokens: string;
+    access_token: string;
     role: string;
 }
 

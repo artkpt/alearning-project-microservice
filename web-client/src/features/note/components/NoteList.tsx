@@ -60,7 +60,7 @@ export function NoteList({notes}: NoteListProps){
                     </div>
                    
                     <p className="text-xs ">
-                        Author: {note.owner.username} | Created On: {note.createdAt}
+                        Author: {note.ownerId} | Created On: {note.createdAt}
                     </p>
                 </div>
                     

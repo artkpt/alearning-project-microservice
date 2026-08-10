@@ -11,7 +11,7 @@ import { requireAuth } from "../../features/auth/api/requireAuth";
 /////////////////////
 // DELETE/PUT /notes/:id
 export const noteAction = async({request,params}:ActionFunctionArgs)=>{
-    const token = useAuth.getState().auth?.accessTokens
+    const token = useAuth.getState().auth?.access_token
     if(request.method === 'DELETE' ){
         const noteId = params.id
         try{
@@ -39,7 +39,7 @@ export const noteAction = async({request,params}:ActionFunctionArgs)=>{
 /////////////////////////
 // DELETE /api/notes/:id/delete
 export const deleteNoteFetcher = async({params}:ActionFunctionArgs)=>{
-    const token = useAuth.getState().auth?.accessTokens
+    const token = useAuth.getState().auth?.access_token
     const noteId = params.id
     try{
         await fetchDel(`${import.meta.env.VITE_NOTE_API}/${noteId}`,{token})

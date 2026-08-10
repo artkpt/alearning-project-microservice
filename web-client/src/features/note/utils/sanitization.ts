@@ -1,13 +1,9 @@
-import type { NoteResponse } from "@alearning/types";
-
-export function mapToNote(noteResponse: NoteResponse){
+export function mapToNote(noteResponse: any){
     return {
         id: noteResponse.id,
         title: noteResponse.title,
-        slug: noteResponse.slug,
         visibility: noteResponse.visibility,
         ownerId: noteResponse.ownerId,
-        isShadow: noteResponse.isShadow,
         description: noteResponse.description ?? "",
         content: noteResponse.content ?? "",
         createdAt: noteResponse.createdAt,
