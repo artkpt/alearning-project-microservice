@@ -10,10 +10,15 @@ export default defineConfig({
   ],
   server:{
     proxy:{
-      '/api':{
+      '/api/note':{
         target: 'http://note-service:3333',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api\/note/, '')
+      },
+      '/api/auth':{
+        target: 'http://host.docker.internal:4000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/auth/, '')
       }
     },
     watch: {
