@@ -20,17 +20,19 @@ EXPOSE 3333
 
 FROM base AS prod
 
-COPY packages/ /app/packages
+WORKDIR /app/note-service/
 
-RUN npm ci 
+COPY note-service/ ./
 
-COPY . .
+RUN npm ci
 
-RUN npm run build:backend
+RUN npm run build
 
-RUN npm ci --omit="dev" -w=alearning-backend
+WORKDIR /app/note-service/build
 
-CMD [ "node", "apps/alearning-backend/build/bin/server.js" ]
+RUN npm ci --omit="dev"
+
+CMD [ "node", "bin/server.js" ]
 
 
 

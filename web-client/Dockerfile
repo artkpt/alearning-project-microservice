@@ -21,23 +21,19 @@ CMD ["npm", "run", "dev"]
 
 FROM base AS build
 
-COPY packages/ /app/packages
+WORKDIR /app/web-client
 
 RUN npm ci
 
-COPY . .
+COPY web-client/ ./
 
-WORKDIR /app/apps/alearning-frontend
-
-RUN npm run build -w=alearning-frontend
-
-
+RUN npm run build
 
 FROM nginx:1.26-alpine AS prod
 
-COPY --from=build /app/apps/alearning-frontend/dist/ /usr/share/nginx/html
+COPY --from=build /app/web-client/dist/ /usr/share/nginx/html
 
-COPY apps/alearning-frontend/nginx.conf /etc/nginx/conf.d/default.conf
+COPY web-client/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
