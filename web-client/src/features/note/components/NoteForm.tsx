@@ -66,7 +66,7 @@ export function NoteForm({note}: NoteFormProps){
                                         .map((option)=> option.value)
         const newTopics = []
         for(let newOption of newOptions){
-            const newTopic = await createTopic(newOption, auth?.accessTokens)
+            const newTopic = await createTopic(newOption, auth?.access_token)
             newTopics.push(newTopic)
         }
 
