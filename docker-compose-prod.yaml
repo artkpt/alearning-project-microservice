@@ -1,0 +1,110 @@
+name: alearning-microservice-prod
+services:
+  note-service-prod:
+    container_name: note-service-prod
+    networks:
+      - note-service
+      - gateway
+    image: alearning-note-service-prod
+    build:
+      context: .
+      dockerfile: note-service/Dockerfile
+      target: prod
+    depends_on:
+      - note-service-db-prod
+    env_file:
+      - note-service/.env.production
+
+  note-service-db-prod:
+    container_name: note-service-db-prod
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_USER=alearning
+      - MYSQL_PASSWORD=alearning
+      - MYSQL_DATABASE=note_app
+    networks:
+      - note-service
+    image: mysql:8.0
+    volumes:
+      - note-service-data:/var/lib/mysql
+
+  auth-service-prod:
+    container_name: auth-service-prod
+    environment:
+      - spring_datasource_url=jdbc:mysql://auth-service-db-prod:3306/auth_service
+      - spring_datasource_username=alearning
+      - spring_datasource_password=alearning
+    networks:
+      - auth-service
+      - gateway
+    image: alearning-auth-service-prod
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    depends_on:
+      auth-service-db-prod:
+        condition: service_healthy
+
+  auth-service-db-prod:
+    container_name: auth-service-db-prod
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_USER=alearning
+      - MYSQL_PASSWORD=alearning
+      - MYSQL_DATABASE=auth_service
+    networks:
+      - auth-service
+    image: mysql:8.0
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "alearning", "-palearning" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - auth-service-data:/var/lib/mysql
+
+  web-client-prod:
+    container_name: web-client-prod
+    networks:
+      - frontend
+    image: alearning-web-client-prod
+    build:
+      context: .
+      dockerfile: web-client/Dockerfile
+      target: prod
+
+  api-gateway-prod:
+    container_name: api-gateway-prod
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - gateway
+    image: alearning-api-gateway-prod
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - 8080:8080
+
+  reverse-proxy:
+    ports:
+      - 80:80
+    container_name: reverse-proxy
+    image: reverse-proxy
+    build:
+      context: .
+    networks:
+      - frontend
+      - gateway
+    depends_on:
+      - api-gateway-prod
+      - web-client-prod
+
+networks:
+  frontend:
+  gateway:
+  note-service:
+  auth-service:
+volumes:
+  auth-service-data:
+  note-service-data:

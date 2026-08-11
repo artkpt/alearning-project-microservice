@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service-route
+              uri: http://auth-service:4000
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - StripPrefix=2
+
+            - id: note-service-route
+              uri: http://note-service:3333
+              predicates:
+                - Path=/api/note/**
+              filters:
+                - StripPrefix=2
+
