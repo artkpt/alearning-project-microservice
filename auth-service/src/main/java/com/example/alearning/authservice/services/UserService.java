@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,6 +36,10 @@ public class UserService {
 
     public User findUserById(Long id) {
         return userRepo.findById(id).orElse(null);
+    }
+
+    public List<User> findUsersByIds(List<Long> userIds) {
+        return userRepo.findAllById(userIds);
     }
 
     private void checkDuplication(User user) {

@@ -4,6 +4,7 @@ import com.example.alearning.authservice.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -11,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select u from User u where u.username=:username")
     Optional<User> findByUsername(String username);
+
+    List<User> findAllByIdIn(List<Long> userIds);
 }
