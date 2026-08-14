@@ -1,6 +1,14 @@
 server:
   port: 8080
 
+note:
+  service:
+    url: http://localhost:3333
+
+auth:
+  service:
+    url: http://localhost:4000
+
 spring:
   cloud:
     gateway:
@@ -8,14 +16,14 @@ spring:
         webflux:
           routes:
             - id: auth-service-route
-              uri: http://auth-service:4000
+              uri: http://localhost:4000
               predicates:
                 - Path=/api/auth/**
               filters:
                 - StripPrefix=2
 
             - id: note-service-route
-              uri: http://note-service:3333
+              uri: http://localhost:3333
               predicates:
                 - Path=/api/note/**
               filters:

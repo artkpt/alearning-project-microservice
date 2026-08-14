@@ -21,7 +21,7 @@ export default defineConfig({
       //   rewrite: (path) => path.replace(/^\/api\/auth/, '')
       // },
       '/api':{
-        target: 'http://api-gateway:8080',
+        target: 'http://host.docker.internal:8080',
         changeOrigin: true
       }
     },
