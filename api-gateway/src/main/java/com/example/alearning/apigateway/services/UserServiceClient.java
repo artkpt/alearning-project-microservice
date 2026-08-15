@@ -30,7 +30,6 @@ public class UserServiceClient {
     }
 
     public Mono<List<User>> getUsersByIds(List<Long> userIds){
-        System.out.println("------------------------" + userIds + "######################");
         return webClient.get().uri("/users?userIds={userIds}", joinIds(userIds))
                 .retrieve()
                 .bodyToFlux(User.class)

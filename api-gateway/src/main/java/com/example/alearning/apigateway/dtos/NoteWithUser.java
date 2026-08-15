@@ -9,7 +9,8 @@ public record NoteWithUser(
         String updatedAt,
         String visibility,
         String description,
-        User owner
+        User owner,
+        Set<Topic> topics
 ) {
 
 }

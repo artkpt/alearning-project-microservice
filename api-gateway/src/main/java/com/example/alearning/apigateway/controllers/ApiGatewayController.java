@@ -5,6 +5,7 @@ import com.example.alearning.apigateway.dtos.NoteWithUser;
 import com.example.alearning.apigateway.dtos.User;
 import com.example.alearning.apigateway.services.NoteServiceClient;
 import com.example.alearning.apigateway.services.UserServiceClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class ApiGatewayController {
                     List<Long> userIds = notes.stream()
                             .map(Note::getOwnerId)
                             .toList();
-                    System.out.println(userIds);
+
                     return userServiceClient.getUsersByIds(userIds)
                             .map(users -> {
                                 Map<Long, User> userMap = users.stream()
@@ -46,7 +47,8 @@ public class ApiGatewayController {
                                                 note.getUpdatedAt(),
                                                 note.getVisibility(),
                                                 note.getDescription(),
-                                                userMap.get(note.getOwnerId())
+                                                userMap.get(note.getOwnerId()),
+                                                note.getTopics()
                                         ))
                                         .toList();
                             });
@@ -58,4 +60,10 @@ public class ApiGatewayController {
     public Mono<User> getUser(@PathVariable Long userId) {
         return  userServiceClient.getUser(userId);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<Object> test() {
+            return ResponseEntity.ok(Map.of("say", "hello"));
+        }
+
 }

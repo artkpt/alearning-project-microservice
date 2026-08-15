@@ -6,16 +6,19 @@ import com.example.alearning.authservice.models.TokenType;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
+import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
@@ -33,14 +36,19 @@ public class JwtUtils {
         return this.rsaPublicJWK;
     }
 
-    public JwtUtils() {
+    public JwtUtils(
+            @Value("${app.security.jwt.private-key-location}") Resource privateKeyResource
+    ){
         try {
-            rsaPrivateJWK = new RSAKeyGenerator(2048)
-                    .keyID(KEY_ID).generate();
-            rsaPublicJWK = rsaPrivateJWK.toPublicJWK();
-            System.out.println(rsaPublicJWK.toJSONString());
-        } catch (JOSEException e) {
-            throw new RuntimeException(e);
+            String privateKeyPem = privateKeyResource.getContentAsString(StandardCharsets.UTF_8);
+            System.out.println(privateKeyPem);
+            JWK jwk = JWK.parseFromPEMEncodedObjects(privateKeyPem);
+            this.rsaPrivateJWK = jwk.toRSAKey();
+
+            this.rsaPublicJWK = this.rsaPrivateJWK.toPublicJWK();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load RSA Key for JWT", e);
         }
     }
 

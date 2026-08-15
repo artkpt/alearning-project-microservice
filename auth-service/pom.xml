@@ -95,8 +95,8 @@
 
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk18on</artifactId>
-			<version>1.80</version>
+			<artifactId>bcpkix-jdk18on</artifactId>
+			<version>1.78.1</version>
 		</dependency>
 
 		<!-- Source: https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->

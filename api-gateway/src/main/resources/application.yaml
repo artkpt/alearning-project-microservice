@@ -5,11 +5,18 @@ note:
   service:
     url: http://localhost:3333
 
+
 auth:
   service:
     url: http://localhost:4000
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:4000/.well-known/jwks.json
+
   cloud:
     gateway:
       server:
