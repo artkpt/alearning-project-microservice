@@ -23,8 +23,8 @@ export const loginAction = async({ request }:ActionFunctionArgs)=>{
 }
 
 export const logoutAction = async()=>{
-    const auth = useAuth.getState().auth
-    await logout(auth?.access_token)
+    // const auth = useAuth.getState().auth
+    // await logout(auth?.access_token)
     useAuth.getState().logout()
     return redirect("/notes")
 }

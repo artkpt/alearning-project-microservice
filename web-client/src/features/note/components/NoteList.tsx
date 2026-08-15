@@ -19,7 +19,7 @@ export function NoteList({notes}: NoteListProps){
             const items:Items = [
                 {
                     options: [
-                        {label: "Edit", key:"edit", action: updateHadle },
+                        {label: "Edit", key:"edit", action: updateHandle },
                         {label: "Delete", key:"delete", action: deleteHandle}
                     ]
                 }
@@ -31,7 +31,7 @@ export function NoteList({notes}: NoteListProps){
                     method: "DELETE"
                 })
             }
-            function updateHadle(){
+            function updateHandle(){
                 navigate(`/notes/${note.id}/edit`)
             }
 
@@ -41,7 +41,7 @@ export function NoteList({notes}: NoteListProps){
                         <h3 className="text-xl font-semibold text-blue-600">
                             <Link to={`/notes/${note.id}`}>{note.title}</Link>
                         </h3>
-                        {auth?.userId === note.ownerId && <ActionIcon items={items} />}
+                        {auth?.userId === note.owner.id && <ActionIcon items={items} />}
                     </div>
                     
                     <p className="text-sm break-keep">{note.description}</p>
@@ -60,7 +60,7 @@ export function NoteList({notes}: NoteListProps){
                     </div>
                    
                     <p className="text-xs ">
-                        Author: {note.ownerId} | Created On: {note.createdAt}
+                        Author: {note.owner.username} | Created On: {note.createdAt}
                     </p>
                 </div>
                     
