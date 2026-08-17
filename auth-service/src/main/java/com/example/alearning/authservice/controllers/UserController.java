@@ -19,7 +19,10 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        if(user.getRole().equals("admin")){
+            return  ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 

@@ -23,11 +23,13 @@ public class WebSecurityConfig {
                 httpSecurityHeadersConfigurer.frameOptions(frameOptionsConfig ->
                         frameOptionsConfig.disable()));
         http.csrf(crsf -> crsf.disable())
-                .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            .authorizeHttpRequests((requests) -> requests
+                    .requestMatchers("/admin/**").hasAuthority("admin")
+                    .requestMatchers("/auth/**").permitAll()
+                    .anyRequest().permitAll()
+            )
+            .sessionManagement(session -> session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
