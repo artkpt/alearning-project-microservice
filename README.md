@@ -1,5 +1,11 @@
 # alearning-project-microservice
 
+## auth service
+copy private-key.pem into auth service resources
+```
+openssl genrsa -out private-key.pem 2048
+```
+
 ## วิธี demo in dev mode
 
 1. สั่ง run container ด้วยคำสั่ง 
