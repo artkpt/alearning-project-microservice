@@ -8,5 +8,6 @@ export function mapToNote(noteResponse: any){
         updatedAt: noteResponse.updatedAt,
         topics: noteResponse.topics,
         owner: noteResponse.owner,
+        content: noteResponse.content ?? ""
     }
 }

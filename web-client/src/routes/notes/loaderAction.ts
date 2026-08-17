@@ -25,6 +25,7 @@ export const noteAction = async({request,params}:ActionFunctionArgs)=>{
     if(request.method === 'PUT' ){
         const noteId = params.id
         const payload = await request.json()
+        console.log(payload)
         try{
             await fetchPut(`${import.meta.env.VITE_NOTE_API}/${noteId}`, payload, {token})
             return redirect(`/notes/${noteId}`)
@@ -55,6 +56,7 @@ export const deleteNoteFetcher = async({params}:ActionFunctionArgs)=>{
 export const createNoteAction = async ({ request }: ActionFunctionArgs) => {
     try{
         const payload = await request.json()
+        console.log(payload)
         await createNote(payload)
         return redirect("/notes")
     }catch(e){

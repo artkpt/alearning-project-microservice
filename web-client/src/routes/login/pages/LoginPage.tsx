@@ -1,4 +1,4 @@
-import { Form } from "react-router";
+import { Form, Link } from "react-router";
 
 
 export function LoginPage(){
@@ -46,7 +46,9 @@ export function LoginPage(){
                         Sign In
                     </button>
                 </Form>
+                <Link to={"/register"}>register</Link>
             </div>
+
         </div>
     )
 }

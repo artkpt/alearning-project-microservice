@@ -3,6 +3,7 @@ import { redirect } from "react-router";
 import { authen } from "../../features/auth/api/authen";
 import { useAuth } from "../../features/auth/stores/authStore";
 import { logout } from "../../features/auth/api/logout";
+import {mapToAuth} from "../../features/auth/utils/mapToAuth.ts";
 
 
 export const loginAction = async({ request }:ActionFunctionArgs)=>{
@@ -13,8 +14,8 @@ export const loginAction = async({ request }:ActionFunctionArgs)=>{
     const payload = {username, password} as Record<string, string | number | any[]>
     
     try{
-        const response = await authen(payload)    
-        useAuth.getState().login(response)
+        const response = await authen(payload)
+        useAuth.getState().login(mapToAuth(response))
         return redirect('/')
     } catch(e){
         return redirect('/login')

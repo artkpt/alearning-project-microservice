@@ -10,6 +10,7 @@ import { requireAuth } from "../features/auth/api/requireAuth";
 import { UserFormPage } from "./users/UserFormPage";
 import { createUserAction, createUserLoader } from "./users/loaderAction";
 import { fetchGet } from "../utils/fetchUtils";
+import { RegisterPage } from "./register/RegisterPage";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,11 @@ export const router = createBrowserRouter([
         loader: createUserLoader,
       }
     ]
+  },
+  {
+    path: '/register',
+    Component: RegisterPage,
+    action: createUserAction
   },
   {
     path: '/login',

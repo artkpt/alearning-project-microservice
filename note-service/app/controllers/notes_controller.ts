@@ -84,6 +84,7 @@ export default class NotesController {
 
     async editNote({params, request, bouncer, response}:HttpContext){
         const noteBody = await request.validateUsing(noteValidator)
+        console.log(noteBody)
         const noteId = params.id
 
         const editedNote = await db.transaction(async (trx)=>{
