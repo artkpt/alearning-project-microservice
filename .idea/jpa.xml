@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig">
-    <option name="reLastEntityCreationPackage" value="auth-service/src/main/java/com/example/alearning/authservice/entities" />
-    <option name="reverseEngineeringLastDbConnectionId" value="f8abd5ab-6650-4595-8fe0-e6329162cb5c" />
+    <option name="reLastEntityCreationPackage" value="course-service/src/main/java/com/example/alearning/courseservice/entities" />
+    <option name="reverseEngineeringLastDbConnectionId" value="2e256283-f67b-41b9-a46b-2a3f7cc2bc88" />
   </component>
 </project>
