@@ -66,6 +66,23 @@ services:
       timeout: 5s
       retries: 10
 
+  course-service-db:
+    container_name: course-service-db
+    image: postgres:16
+    ports:
+      - "8001:5432"
+    environment:
+      - POSTGRES_USER=alearning
+      - POSTGRES_PASSWORD=alearning
+      - POSTGRES_DB=course_service
+    networks:
+      - backend-dev
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U alearning -d course_service" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web-client:
     ports:
       - 5173:5173
