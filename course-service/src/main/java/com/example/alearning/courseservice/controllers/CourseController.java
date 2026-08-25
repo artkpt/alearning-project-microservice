@@ -8,6 +8,7 @@ import com.example.alearning.courseservice.services.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ public class CourseController {
     private final FileService fileService;
     private final LessonService lessonService;
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("")
     public ResponseEntity<Object> createCourse(
             @ModelAttribute CourseForm form, @RequestPart("file") MultipartFile file) {

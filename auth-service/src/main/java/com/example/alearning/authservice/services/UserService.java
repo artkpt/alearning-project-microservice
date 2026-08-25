@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -60,6 +62,10 @@ public class UserService {
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         Authentication authentication = authenticationManager.authenticate(upat);
         UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(user.getUsername());
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
         long refreshTokenAgeInMilli = 8*60*60*1000;
         Cookie refreshToken = new Cookie("refreshToken",
                 jwtUtils.generateToken(userDetails, refreshTokenAgeInMilli, TokenType.REFRESH_TOKEN));
@@ -70,7 +76,7 @@ public class UserService {
                 "access_token", jwtUtils.generateToken(userDetails),
                 "userId", ((AuthUserDetail) userDetails).getId(),
                 "username", ((AuthUserDetail) userDetails).getUsername(),
-                "role", ((AuthUserDetail) userDetails).getAuthorities()
+                "roles", roles
         );
     }
 

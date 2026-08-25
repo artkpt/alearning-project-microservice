@@ -14,6 +14,7 @@ import com.nimbusds.jwt.SignedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +22,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -58,13 +61,18 @@ public class JwtUtils {
 
     public String generateToken(UserDetails user, Long ageInMilli, TokenType tokenType) {
         try {
+
+            List<String> roles = user.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+
             JWSSigner signer = new RSASSASigner(rsaPrivateJWK);
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(user.getUsername())
                     .issuer("http://sit.kmutt.ac.th")
                     .expirationTime(new Date(new Date().getTime() + ageInMilli))
                     .issueTime(new Date(new Date().getTime()))
-                    .claim("authorities", user.getAuthorities())
+                    .claim("roles", roles)
                     .claim("uid", ((AuthUserDetail) user).getId())
                     .claim("typ", tokenType.toString())
                     .build();

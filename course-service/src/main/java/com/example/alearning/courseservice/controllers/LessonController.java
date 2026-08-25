@@ -5,6 +5,7 @@ import com.example.alearning.courseservice.entities.Lesson;
 import com.example.alearning.courseservice.services.LessonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("")
     public ResponseEntity<Lesson> addLesson(@ModelAttribute LessonForm form, MultipartFile file) {
         return  ResponseEntity.status(HttpStatus.CREATED).body(lessonService.uploadVideo(form, file));
