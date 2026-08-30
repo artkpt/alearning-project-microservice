@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.integer('owner_id').unsigned().notNullable()
       table.string('description',300)
       table.text('content', 'mediumtext')
+      table.integer('lesson_id').unsigned()
     })
   }
 

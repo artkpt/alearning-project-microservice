@@ -5,7 +5,8 @@ const schema = vine.object({
     visibility: vine.enum(['public', 'private']),
     description: vine.string().maxLength(300).nullable(),
     content: vine.string().nullable(),
-    topic_id: vine.array(vine.number())
+    topic_id: vine.array(vine.number()),
+    lesson_id: vine.number().optional()
 })
 
 export const noteValidator = vine.compile(schema)

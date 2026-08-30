@@ -49,6 +49,7 @@ export default class NotesController {
             newNote.ownerId = user!.id
             newNote.description = noteBody.description
             newNote.content = noteBody.content
+            newNote.lessonId = noteBody.lesson_id
             
             newNote.useTransaction(trx)
             await newNote.save()
@@ -84,7 +85,7 @@ export default class NotesController {
 
     async editNote({params, request, bouncer, response}:HttpContext){
         const noteBody = await request.validateUsing(noteValidator)
-        console.log(noteBody)
+        
         const noteId = params.id
 
         const editedNote = await db.transaction(async (trx)=>{
@@ -124,6 +125,15 @@ export default class NotesController {
         })
 
         return editedNote
+    }
+
+    async getNoteOfLesson({params, user}:HttpContext){
+        const lessonId = params.id
+        const notes = await Note.query().where('lessonId',lessonId)
+                                            .andWhere('userId', user!.id)
+
+        return notes
+                                
     }
 
 

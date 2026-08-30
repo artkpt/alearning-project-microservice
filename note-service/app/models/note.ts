@@ -28,6 +28,9 @@ export default class Note extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
+  @column()
+  declare lessonId: number|undefined
+
   @manyToMany(()=> Topic, {
     pivotTable: 'tags'
   })
