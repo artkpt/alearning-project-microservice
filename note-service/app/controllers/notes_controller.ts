@@ -128,9 +128,9 @@ export default class NotesController {
     }
 
     async getNoteOfLesson({params, user}:HttpContext){
-        const lessonId = params.id
+        const lessonId = params.lessonId
         const notes = await Note.query().where('lessonId',lessonId)
-                                            .andWhere('userId', user!.id)
+                                            .andWhere('ownerId', user!.id)
 
         return notes
                                 
