@@ -4,13 +4,17 @@ import { NoteListPage } from "./notes/pages/NoteListPage";
 import { NoteDetailPage } from "./notes/pages/NoteDetailPage";
 import { NoteFormPage } from "./notes/pages/NoteFormPage";
 import { createNoteAction, deleteNoteFetcher, editNoteLoader, getNoteByIdLoader, getNotesLoader, noteAction } from "./notes/loaderAction";
-import { LoginPage } from "./login/pages/LoginPage";
+import { LoginPage } from "./login/LoginPage";
 import { loginAction, logoutAction } from "./login/loginAction";
 import { requireAuth } from "../features/auth/api/requireAuth";
 import { UserFormPage } from "./users/UserFormPage";
 import { createUserAction, createUserLoader } from "./users/loaderAction";
 import { fetchGet } from "../utils/fetchUtils";
 import { RegisterPage } from "./register/RegisterPage";
+import { CourseListPage } from "./courses/CourseListPage";
+import { enrollment, getCourseDetail, getCoursesLoader, lessonAction, NoteOfLesson } from "./courses/loader";
+import { CourseDetailPage } from "./courses/CourseDetailPage";
+import LessonPage from "./courses/LessonPage";
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +60,23 @@ export const router = createBrowserRouter([
         Component: UserFormPage,
         action: createUserAction,
         loader: createUserLoader,
-      }
+      },
+      {
+        path: '/courses',
+        Component: CourseListPage,
+        loader: getCoursesLoader
+      },
+      {
+        path: '/courses/:id',
+        Component: CourseDetailPage,
+        loader: getCourseDetail,
+      },
+      {
+        path: 'courses/:id/lessons',
+        Component: LessonPage,
+        loader: getCourseDetail,
+        action: lessonAction
+      },
     ]
   },
   {
@@ -72,6 +92,14 @@ export const router = createBrowserRouter([
   {
     path: "/api/notes/:id/delete",
     action: deleteNoteFetcher
+  },
+  {
+    path: "/api/courses/:courseId/enrollments",
+    action: enrollment
+  },
+  {
+    path: "/api/lessons/:lessonId/notes",
+    loader: NoteOfLesson
   },
   {
     path: "/logout",
