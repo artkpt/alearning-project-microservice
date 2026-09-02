@@ -22,10 +22,3 @@ INSERT INTO courses(code, name)
 SELECT 'INT606', 'Network'
 WHERE NOT EXISTS (SELECT 1 FROM courses WHERE code = 'INT606');
 
-INSERT INTO enrollments(user_id, course_id, status)
-SELECT 2, 1,'pending'
-WHERE NOT EXISTS (SELECT 1 FROM enrollments WHERE user_id = 2 AND course_id = 1);
-
-INSERT INTO enrollments(user_id, course_id, status)
-SELECT 2, 2,'approved'
-WHERE NOT EXISTS (SELECT 1 FROM enrollments WHERE user_id = 2 AND course_id = 2);
