@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,5 +43,11 @@ public class Course {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at", insertable = false, updatable = false)
     private OffsetDateTime updatedAt;
+
+    @OneToMany(mappedBy = "course")
+    private List<Lesson> lessons;
+
+
+
 
 }

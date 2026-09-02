@@ -22,15 +22,15 @@ public class LessonService {
     private final CourseRepository courseRepository;
 
     @Transactional
-    public Lesson uploadVideo(LessonForm form, MultipartFile file) {
+    public Lesson uploadVideo(LessonForm form, MultipartFile file, Integer courseId) {
 
         Lesson newLesson = new Lesson();
         newLesson.setTitle(form.getTitle());
 
-        Integer nextSequence = lessonRepository.findMaxSequenceOrderByCourseId(form.getCourseId()) + 1;
+        Integer nextSequence = lessonRepository.findMaxSequenceOrderByCourseId(courseId) + 1;
         newLesson.setSequenceOrder(nextSequence);
 
-        Course courseProxy = courseRepository.getReferenceById(form.getCourseId());
+        Course courseProxy = courseRepository.getReferenceById(courseId);
         newLesson.setCourse(courseProxy);
 
         newLesson.setVideoUrl(fileService.storeVideo(file));

@@ -1,8 +1,10 @@
 package com.example.alearning.courseservice.controllers;
 
 import com.example.alearning.courseservice.dtos.CourseForm;
+import com.example.alearning.courseservice.dtos.LessonForm;
 import com.example.alearning.courseservice.entities.Course;
 import com.example.alearning.courseservice.entities.Enrollment;
+import com.example.alearning.courseservice.entities.Lesson;
 import com.example.alearning.courseservice.repositories.CourseRepository;
 import com.example.alearning.courseservice.services.EnrollmentService;
 import com.example.alearning.courseservice.services.FileService;
@@ -43,6 +45,12 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courseRepository.findAll());
     }
 
+    @GetMapping("/{courseId}")
+    public ResponseEntity<Object> getCourseById(@PathVariable Integer courseId) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseRepository.findById(courseId));
+    }
+
+
     @GetMapping("/{courseId}/lessons")
     public ResponseEntity<Object> getAllLessonsOfCourse(@PathVariable("courseId") Integer courseId) {
         return ResponseEntity.ok(lessonService.findAllLessonsByCourseId(courseId));
@@ -55,12 +63,21 @@ public class CourseController {
             @PathVariable Integer courseId,
             @AuthenticationPrincipal Jwt jwt
     ){
-        Integer userId = jwt.getClaim("uid");
+        Long userId = jwt.getClaim("uid");
         Enrollment response = enrollmentService.createPendingEnrollment(userId, courseId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PreAuthorize("hasRole('admin')")
+    @PostMapping("/{courseId}/lessons")
+    public ResponseEntity<Lesson> addLesson(
+            @ModelAttribute LessonForm form,
+            MultipartFile file,
+            @PathVariable  Integer courseId
+    ) {
+        return  ResponseEntity.status(HttpStatus.CREATED).body(lessonService.uploadVideo(form, file, courseId));
+    }
 
 
 }

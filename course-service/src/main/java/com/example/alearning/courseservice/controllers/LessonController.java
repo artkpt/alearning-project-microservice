@@ -20,7 +20,7 @@ public class LessonController {
     @PreAuthorize("hasRole('admin')")
     @PostMapping("")
     public ResponseEntity<Lesson> addLesson(@ModelAttribute LessonForm form, MultipartFile file) {
-        return  ResponseEntity.status(HttpStatus.CREATED).body(lessonService.uploadVideo(form, file));
+        return  ResponseEntity.status(HttpStatus.CREATED).body(lessonService.uploadVideo(form, file, form.getCourseId()));
     }
 
 //    @GetMapping("")
