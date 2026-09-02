@@ -23,7 +23,7 @@ public class Enrollment {
 
     @NotNull
     @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    private Long userId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
