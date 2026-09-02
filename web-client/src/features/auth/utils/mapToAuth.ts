@@ -3,6 +3,6 @@ export function mapToAuth(authResponse: any){
         userId: authResponse.userId,
         username: authResponse.username,
         access_token: authResponse.access_token,
-        role: authResponse.role[0].authority
+        role: authResponse.roles[0]
     }
 }
