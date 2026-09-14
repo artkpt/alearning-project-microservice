@@ -3,6 +3,7 @@ import { checkEnrollment } from "@/features/course/checkEnrollment"
 import { getCourseById } from "@/features/course/getCourseById"
 import { getCourses } from "@/features/course/getCourses"
 import { getCourseWithLesson } from "@/features/course/getCourseWithLesson"
+import { getLessonById } from "@/features/course/getLessonById"
 import { postEnrollment } from "@/features/course/postEnrollment"
 import { createNote } from "@/features/note/api/createNote"
 import { fetchGet } from "@/utils/fetchUtils"
@@ -15,7 +16,7 @@ export const getCoursesLoader = async() => {
 }
 
 export const getCourseDetail = async({params}: LoaderFunctionArgs) => {
-    const id = params.id as string
+    const id = params.courseId as string
     const auth = useAuth.getState().auth
     try{
         const course = await getCourseById(id)
@@ -89,3 +90,10 @@ export const NoteOfLesson = async ({ params }: LoaderFunctionArgs) => {
       }
       return response.json();
     }
+
+export const getLessonByIdLoader = async ({ params }: LoaderFunctionArgs) => {
+    const lessonId = params.lessonId as string
+    return {
+        lesson: await getLessonById(lessonId)
+    }
+}

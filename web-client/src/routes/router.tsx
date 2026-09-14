@@ -12,9 +12,11 @@ import { createUserAction, createUserLoader } from "./users/loaderAction";
 import { fetchGet } from "../utils/fetchUtils";
 import { RegisterPage } from "./register/RegisterPage";
 import { CourseListPage } from "./courses/CourseListPage";
-import { enrollment, getCourseDetail, getCoursesLoader, lessonAction, NoteOfLesson } from "./courses/loader";
+import { enrollment, getCourseDetail, getCoursesLoader, getLessonByIdLoader, lessonAction, NoteOfLesson } from "./courses/loader";
 import { CourseDetailPage } from "./courses/CourseDetailPage";
 import LessonPage from "./courses/LessonPage";
+import LearningPage from "./courses/LearningPage";
+
 
 export const router = createBrowserRouter([
   {
@@ -67,15 +69,22 @@ export const router = createBrowserRouter([
         loader: getCoursesLoader
       },
       {
-        path: '/courses/:id',
+        path: '/courses/:courseId',
         Component: CourseDetailPage,
         loader: getCourseDetail,
       },
       {
-        path: 'courses/:id/lessons',
-        Component: LessonPage,
+        path: 'courses/:courseId/lessons/',
+        Component: LearningPage,
         loader: getCourseDetail,
-        action: lessonAction
+        action: lessonAction,
+        children: [
+          {
+            path:':lessonId',
+            Component: LessonPage,
+            loader: getLessonByIdLoader
+          }
+        ]
       },
     ]
   },

@@ -2,6 +2,7 @@ import { useLoaderData, Link, useFetcher } from "react-router";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/stores/authStore";
+import { PlayCircle } from "lucide-react";
 
 interface Lesson {
   id: number;
@@ -57,7 +58,7 @@ export function CourseDetailPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              {/* Lessons ({course.lessons.length}) */}
+              Lessons ({course.lessons.length})
             </h2>
             {auth && (enrollment?.status 
                                     ? <Button disabled>{enrollment.status}</Button>
@@ -68,21 +69,31 @@ export function CourseDetailPage() {
             )}
           </div>
 
-          {/* {enrollment?.status && 
-              <div className="grid grid-cols-1 gap-4">
-                {course.lessons.map((lesson) => {
-                  return (
-                    <Link to={`/courses/${course.id}/lessons`}>
-                      <Card key={lesson.id} className="overflow-hidden rounded-md border shadow-sm flex justify-between p-4 hover:shadow-md transition-shadow">
-                            <h3 className="text-lg font-semibold text-slate-900 leading-tight">
-                              {lesson.title}
-                            </h3>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </div>
-          }   */}
+           
+            <div className="grid grid-cols-1 gap-4">
+              {course.lessons.map((lesson) => {
+                return (
+                  
+                  <Card key={lesson.id} className="overflow-hidden rounded-md border shadow-sm flex justify-between p-4 hover:shadow-md transition-shadow">
+                        <h3 className="text-lg font-semibold text-slate-900 leading-tight">
+                          {lesson.title}
+                        </h3>
+
+                        {enrollment?.status && (
+                          <Link to={`/courses/${course.id}/lessons/${lesson.id}`}>
+                            <Button size="sm" className="flex items-center gap-2">
+                              <PlayCircle size={16} /> 
+                              Play
+                            </Button>
+                          </Link>
+                        )}
+                  </Card>
+                  
+                
+                )
+              })}
+            </div>
+          
   
         </div>
       </div>
