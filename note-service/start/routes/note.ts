@@ -10,6 +10,8 @@ router.group(()=>{
         router.post('/notes', [NotesController, 'createNote'])
         router.delete('/notes/:id', [NotesController, 'deleteNote'])
         router.put('/notes/:id', [NotesController, 'editNote'])
+
+        // fix me: change to /notes?lessonId=1
         router.get('/lessons/:lessonId/notes', [NotesController, 'getNoteOfLesson'])
     }).use(middleware.auth())
    
