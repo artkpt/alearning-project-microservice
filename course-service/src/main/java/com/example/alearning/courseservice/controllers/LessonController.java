@@ -24,6 +24,9 @@ public class LessonController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(lessonService.uploadVideo(form, file, form.getCourseId()));
     }
 
-//    @GetMapping("")
+    @GetMapping("/{lessonId}")
+    public ResponseEntity<Lesson>  getLessonById(@PathVariable("lessonId") Integer lessonId) {
+        return ResponseEntity.ok(lessonService.findLessonById(lessonId));
+    }
 
 }

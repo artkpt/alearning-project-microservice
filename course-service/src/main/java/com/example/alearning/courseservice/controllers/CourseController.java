@@ -10,7 +10,9 @@ import com.example.alearning.courseservice.repositories.CourseRepository;
 import com.example.alearning.courseservice.services.EnrollmentService;
 import com.example.alearning.courseservice.services.FileService;
 import com.example.alearning.courseservice.services.LessonService;
+import com.example.alearning.courseservice.utils.ListMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +32,8 @@ public class CourseController {
     private final FileService fileService;
     private final LessonService lessonService;
     private final EnrollmentService enrollmentService;
+    private final ModelMapper modelMapper;
+    private final ListMapper listMapper;
 
     @PreAuthorize("hasRole('admin')")
     @PostMapping("")
@@ -46,17 +50,17 @@ public class CourseController {
 
     @GetMapping("")
     public ResponseEntity<Object> getAllCourses() {
-        List<CourseListResponse> response = courseRepository.findAll()
-                .stream()
-                .map(CourseListResponse::fromEntity)
-                .toList();
+//        fix me: should not sent LessonDTO
+        List<CourseListResponse> response = listMapper.mapList(courseRepository.findAll(),
+                CourseListResponse.class,
+                modelMapper);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> getCourseById(@PathVariable Integer courseId) {
         Course course = courseRepository.findById(courseId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        CourseListResponse response = CourseListResponse.fromEntity(course);
+        CourseListResponse response = modelMapper.map(course, CourseListResponse.class);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

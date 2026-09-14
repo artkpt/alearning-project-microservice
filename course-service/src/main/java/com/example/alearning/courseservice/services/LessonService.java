@@ -42,4 +42,8 @@ public class LessonService {
         return lessonRepository.findByCourseIdOrderBySequenceOrderAsc(lessonId);
     }
 
+    public Lesson findLessonById(Integer lessonId) {
+        return lessonRepository.findById(lessonId).orElseThrow(()->new ResourceNotFoundException("Lesson not found"));
+    }
+
 }
