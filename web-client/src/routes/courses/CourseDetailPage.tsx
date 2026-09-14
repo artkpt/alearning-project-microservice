@@ -57,9 +57,9 @@ export function CourseDetailPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
-              Lessons ({course.lessons.length})
+              {/* Lessons ({course.lessons.length}) */}
             </h2>
-            {auth && (enrollment.status 
+            {auth && (enrollment?.status 
                                     ? <Button disabled>{enrollment.status}</Button>
 
                                     : <fetcher.Form method="post" action = {`/api/courses/${course.id}/enrollments`}>
@@ -68,7 +68,7 @@ export function CourseDetailPage() {
             )}
           </div>
 
-          {enrollment.status && 
+          {/* {enrollment?.status && 
               <div className="grid grid-cols-1 gap-4">
                 {course.lessons.map((lesson) => {
                   return (
@@ -82,7 +82,7 @@ export function CourseDetailPage() {
                   );
                 })}
               </div>
-          }  
+          }   */}
   
         </div>
       </div>

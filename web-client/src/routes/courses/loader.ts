@@ -2,10 +2,11 @@ import { useAuth } from "@/features/auth/stores/authStore"
 import { checkEnrollment } from "@/features/course/checkEnrollment"
 import { getCourseById } from "@/features/course/getCourseById"
 import { getCourses } from "@/features/course/getCourses"
+import { getCourseWithLesson } from "@/features/course/getCourseWithLesson"
 import { postEnrollment } from "@/features/course/postEnrollment"
 import { createNote } from "@/features/note/api/createNote"
 import { fetchGet } from "@/utils/fetchUtils"
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router"
+import { redirect, type ActionFunctionArgs, type LoaderFunctionArgs } from "react-router"
 
 export const getCoursesLoader = async() => { 
     return {
@@ -15,9 +16,13 @@ export const getCoursesLoader = async() => {
 
 export const getCourseDetail = async({params}: LoaderFunctionArgs) => {
     const id = params.id as string
+    const auth = useAuth.getState().auth
     try{
         const course = await getCourseById(id)
-        const enrollment = await checkEnrollment(id)
+        let enrollment = null
+        if(auth){
+            enrollment = await checkEnrollment(id)
+        }
         
         return { 
             course: course,
@@ -25,7 +30,21 @@ export const getCourseDetail = async({params}: LoaderFunctionArgs) => {
         }
 
     }catch(e){
-       console.log(e)
+       if(e instanceof Error && e.message === "401"){ throw redirect('/login')}
+    }
+}
+
+export const getLessonOfCourse = async({params}: LoaderFunctionArgs) => {
+    const id = params.id as string
+    try{
+        const course = await getCourseWithLesson(id)
+        
+        return { 
+            course: course
+        }
+
+    }catch(e){
+       if(e instanceof Error && e.message === "401"){ throw redirect('/login')}
     }
 }
 
