@@ -18,7 +18,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("")
+    @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         if(user.getRole().equals("admin")){
             return  ResponseEntity.status(HttpStatus.FORBIDDEN).build();

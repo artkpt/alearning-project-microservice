@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
+    @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
