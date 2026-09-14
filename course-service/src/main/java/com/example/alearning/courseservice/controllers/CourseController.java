@@ -1,6 +1,7 @@
 package com.example.alearning.courseservice.controllers;
 
 import com.example.alearning.courseservice.dtos.CourseForm;
+import com.example.alearning.courseservice.dtos.CourseListResponse;
 import com.example.alearning.courseservice.dtos.LessonForm;
 import com.example.alearning.courseservice.entities.Course;
 import com.example.alearning.courseservice.entities.Enrollment;
@@ -17,6 +18,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,12 +46,18 @@ public class CourseController {
 
     @GetMapping("")
     public ResponseEntity<Object> getAllCourses() {
-        return ResponseEntity.status(HttpStatus.OK).body(courseRepository.findAll());
+        List<CourseListResponse> response = courseRepository.findAll()
+                .stream()
+                .map(CourseListResponse::fromEntity)
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> getCourseById(@PathVariable Integer courseId) {
-        return ResponseEntity.status(HttpStatus.OK).body(courseRepository.findById(courseId));
+        Course course = courseRepository.findById(courseId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CourseListResponse response = CourseListResponse.fromEntity(course);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 

@@ -1,12 +1,12 @@
 package com.example.alearning.courseservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -46,8 +46,5 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Lesson> lessons;
-
-
-
 
 }

@@ -16,6 +16,7 @@ public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{courseId}/enrollments/me")
     public ResponseEntity<EnrollmentStatusResponse> getMyEnrollment(
             @PathVariable Integer courseId,

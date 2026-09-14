@@ -17,6 +17,7 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
+//    fix me: change to /courses/{id}/lessons
     @PreAuthorize("hasRole('admin')")
     @PostMapping("")
     public ResponseEntity<Lesson> addLesson(@ModelAttribute LessonForm form, MultipartFile file) {
