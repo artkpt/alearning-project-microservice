@@ -56,14 +56,5 @@ public class ApiGatewayController {
 
     }
 
-    @GetMapping("/users/{userId}")
-    public Mono<User> getUser(@PathVariable Long userId) {
-        return  userServiceClient.getUser(userId);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<Object> test() {
-            return ResponseEntity.ok(Map.of("say", "hello"));
-        }
 
 }
