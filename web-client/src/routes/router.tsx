@@ -26,7 +26,6 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <></>,
         loader: () => { return redirect("/notes"); },
       },
       {
@@ -77,12 +76,13 @@ export const router = createBrowserRouter([
         path: 'courses/:courseId/lessons/',
         Component: LearningPage,
         loader: getCourseDetail,
-        action: lessonAction,
+        id: 'learning-layout',
         children: [
           {
             path:':lessonId',
             Component: LessonPage,
-            loader: getLessonByIdLoader
+            loader: getLessonByIdLoader,
+            action: lessonAction
           }
         ]
       },
@@ -113,16 +113,6 @@ export const router = createBrowserRouter([
   {
     path: "/logout",
     action: logoutAction,
-  },
-  {
-    path: "/test",
-    element: <h1>test</h1>,
-    loader: async() => { 
-        const res = await fetchGet(import.meta.env.VITE_TEST)
-        if(!res.ok){ console.log("error")}
-        const data = await res.json()
-        return data
-    }
   },
   {
     path: "*",

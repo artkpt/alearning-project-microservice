@@ -60,21 +60,13 @@ export const enrollment = async({params}: LoaderFunctionArgs) => {
 }
 
 export const lessonAction = async ({ request }: ActionFunctionArgs) => {
-    const formData = await request.formData()
-    const content = formData.get("content") as string
-    const lessonId = formData.get("lessonId") as string
-
-    const payload = {
-        title: "new",
-        visibility: "public",
-        content: content,
-        lesson_id: lessonId,
-        description: null,
-        topic_id: []
-    }
+    console.log('action')
+    const payload = await request.json()
+    console.log('payload', payload)
 
     try{
-        await createNote(payload)
+        let newNote = await createNote(payload)
+        return {success: true, note: newNote}
     }
     catch(e){
         console.log(e)
@@ -93,6 +85,13 @@ export const NoteOfLesson = async ({ params }: LoaderFunctionArgs) => {
 
 export const getLessonByIdLoader = async ({ params }: LoaderFunctionArgs) => {
     const lessonId = params.lessonId as string
+    const courseId = params.courseId as string
+    try{
+        await checkEnrollment(courseId)
+    }catch(e){
+        return redirect('/notes')
+    }
+
     return {
         lesson: await getLessonById(lessonId)
     }
