@@ -9,13 +9,13 @@ import { loginAction, logoutAction } from "./login/loginAction";
 import { requireAuth } from "../features/auth/api/requireAuth";
 import { UserFormPage } from "./users/UserFormPage";
 import { createUserAction, createUserLoader } from "./users/loaderAction";
-import { fetchGet } from "../utils/fetchUtils";
 import { RegisterPage } from "./register/RegisterPage";
 import { CourseListPage } from "./courses/CourseListPage";
 import { enrollment, getCourseDetail, getCoursesLoader, getLessonByIdLoader, lessonAction, NoteOfLesson } from "./courses/loader";
 import { CourseDetailPage } from "./courses/CourseDetailPage";
 import LessonPage from "./courses/LessonPage";
 import LearningPage from "./courses/LearningPage";
+import { registerAction } from "./register/loaderAction";
 
 
 export const router = createBrowserRouter([
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     Component: RegisterPage,
-    action: createUserAction
+    action: registerAction
   },
   {
     path: '/login',

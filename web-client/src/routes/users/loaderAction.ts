@@ -11,14 +11,12 @@ export const createUserAction = async ({ request }: ActionFunctionArgs) => {
         return redirect("/notes")
     }catch(e){
         if(e instanceof Error && e.message === "401"){ throw redirect('/login')}
-        if(e instanceof Error && e.message === "403"){ throw redirect('/notes')}
-        if(e instanceof Error && e.message === "422"){
-            return e.cause
-        }
+        if(e instanceof Error && e.message === "403"){ throw redirect('/notes')}      
     }
 }
 
-export const createUserLoader = ()=>{
+
+export const createUserLoader = () =>{
     try{
         requireAuth("admin")
     }catch(e){
