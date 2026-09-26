@@ -60,7 +60,7 @@ public class FileService {
    // Copy file to the target location (Replacing existing file with the same name)
    Path targetLocation = this.imageLocation.resolve(newFilename);
    Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-   return fileName;
+   return newFilename;
   } catch (IOException ex) {
    throw new RuntimeException("Could not store file " + ". Please try again!", ex);
   }
