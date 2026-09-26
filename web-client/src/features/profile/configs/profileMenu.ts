@@ -15,7 +15,7 @@ export const profileMenuConfigs: Record<'admin' | 'user', MenuItemConfig[]> = {
     {
       label: "Create course", 
       type: "navigate", 
-      payload: "/courses/create" 
+      payload: "/admin" 
     },
     { 
       label: "Logout", 
