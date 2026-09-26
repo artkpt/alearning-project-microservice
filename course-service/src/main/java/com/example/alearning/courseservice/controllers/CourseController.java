@@ -40,8 +40,8 @@ public class CourseController {
     public ResponseEntity<Object> createCourse(
             @ModelAttribute CourseForm form, @RequestPart("file") MultipartFile file) {
         Course newCourse = new Course();
-        newCourse.setCode(form.getCode());
-        newCourse.setName(form.getName());
+        newCourse.setCode(form.getCourseCode());
+        newCourse.setName(form.getCourseName());
         newCourse.setDescription(form.getDescription());
         newCourse.setThumbnailUrl(fileService.store(file));
         return ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(newCourse));

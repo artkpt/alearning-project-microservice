@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CourseForm {
-    private String code;
-    private String name;
+    private String courseCode;
+    private String courseName;
     private String description;
 }
