@@ -10,8 +10,7 @@ export function CourseListPage(){
         <Link to={`/courses/${course.id}`}>
           <CourseCard 
             key={course.id} 
-            code={course.code} 
-            name={course.name}
+            course={course}
           />
         </Link>
       ))}
