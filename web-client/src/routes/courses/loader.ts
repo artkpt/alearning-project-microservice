@@ -2,7 +2,7 @@ import { useAuth } from "@/features/auth/stores/authStore"
 import { checkEnrollment } from "@/features/course/checkEnrollment"
 import { getCourseById } from "@/features/course/getCourseById"
 import { getCourses } from "@/features/course/getCourses"
-import { getCourseWithLesson } from "@/features/course/getCourseWithLesson"
+import { getLessonsByCourseId } from "@/features/course/getLessonsByCourseId"
 import { getLessonById } from "@/features/course/getLessonById"
 import { postEnrollment } from "@/features/course/postEnrollment"
 import { createNote } from "@/features/note/api/createNote"
@@ -38,7 +38,7 @@ export const getCourseDetail = async({params}: LoaderFunctionArgs) => {
 export const getLessonOfCourse = async({params}: LoaderFunctionArgs) => {
     const id = params.id as string
     try{
-        const course = await getCourseWithLesson(id)
+        const course = await getLessonsByCourseId(id)
         
         return { 
             course: course
