@@ -1,8 +1,7 @@
 import { Link } from "react-router";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetClose} from "@/components/ui/sheet";
-import { Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import { ProfileIcon } from "../features/profile/ProfileIcon";
 import { useAuth } from "../features/auth/stores/authStore";
 import { BookOpen, PlaySquare } from "lucide-react";
@@ -19,14 +18,14 @@ export function Header({ className = "" }) {
       <div className="flex items-center gap-2">
         
         <Sheet>
-          <SheetTrigger aschild>
+          <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="shrink-0 ">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
           
             <SheetContent side="left" className="w-72 p-0 flex flex-col">
-            {/* ส่วนหัวของ Sidebar */}
+            {/* Sidebar */}
             <div className="p-6 border-b border-border">
                 <SheetHeader>
                 <SheetTitle className="text-2xl text-left font-sans font-bold">
@@ -35,23 +34,23 @@ export function Header({ className = "" }) {
                 </SheetHeader>
             </div>
 
-            {/* ส่วนรายการเมนู */}
+            {/* Menu */}
             <div className="p-4 flex-1 overflow-y-auto">
                 <ul className="w-full space-y-1">
                 {menuList.map((menu) => {
-                    const Icon = menu.icon; 
+                    const Icon = menu.icon
                     return (
-                    <li key={menu.name} className="w-full block">
-                        <SheetClose aschild>
-                        <Link
-                            to={menu.link}
-                            className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-md text-foreground hover:bg-muted hover:text-orange-600 transition-colors"
-                        >
-                            <Icon className="h-5 w-5 text-muted-foreground" />
-                            {menu.name}
-                        </Link>
-                        </SheetClose>
-                    </li>
+                      <li key={menu.name} className="w-full block">
+                          <SheetClose asChild>
+                          <Link
+                              to={menu.link}
+                              className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-md text-foreground hover:bg-muted hover:text-orange-600 transition-colors"
+                          >
+                              <Icon className="h-5 w-5 text-muted-foreground" />
+                              {menu.name}
+                          </Link>
+                          </SheetClose>
+                      </li>
                     );
                 })}
                 </ul>
@@ -68,7 +67,7 @@ export function Header({ className = "" }) {
       </div>
 
       {/* search */}
-      <div className="grow shrink flex justify-end md:justify-center max-w-md px-4 hidden sm:flex">
+      {/* <div className="grow shrink flex justify-end md:justify-center max-w-md px-4 hidden sm:flex">
         <div className="relative w-full">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -77,12 +76,12 @@ export function Header({ className = "" }) {
             className="w-full pl-8 bg-muted/50"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* profile */}
       <div className="flex items-center gap-2 shrink-0">
         {!auth ? (
-          <Button aschild>
+          <Button asChild>
             <Link to="/login">Sign in</Link>
           </Button>
         ) : (
