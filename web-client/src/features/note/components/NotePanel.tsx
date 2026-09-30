@@ -1,10 +1,14 @@
+import type { Course, Lesson } from '@/features/course/types/course.types';
 import { X, Save, PenLine, FileText, Loader2, Calendar } from 'lucide-react';
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import { useFetcher } from 'react-router';
 
+type NotePanelProp = {
+    lesson: Lesson;
+    course: Course
+}
 
-
-export function NotePanel({lesson, course}) {
+export function NotePanel({lesson, course}: NotePanelProp) {
     const [noteMode, setNoteMode] = useState<'hidden' | 'create' | 'view'>('hidden'); 
     const [localNotes, setLocalNotes] = useState<any[]>([]); 
     const [hasLoaded, setHasLoaded] = useState(false)
@@ -48,9 +52,10 @@ export function NotePanel({lesson, course}) {
     function handleSubmit(e: SyntheticEvent){
             console.log('handle submit')
             e.preventDefault()
-            const formData = new FormData(e.currentTarget)
-            const noteContent = formData.get("content")
-            console.log('form data: ', formData)
+            const form = e.currentTarget as HTMLFormElement
+            console.log("form :", form)
+            const contentInput = form.elements.namedItem("content") as HTMLInputElement | HTMLTextAreaElement;
+            const noteContent = contentInput ? contentInput.value : ""
             console.log('noteContent: ', noteContent)
     
             const payload = {
