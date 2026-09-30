@@ -1,9 +1,9 @@
-import { useAuth } from "../auth/stores/authStore"
+import { useAuth } from "../../auth/stores/authStore"
 
 
-export const createCourse = async (formData: FormData) => {
+export const createLesson = async (courseId: string, formData: FormData) => {
         const token = useAuth.getState().auth?.access_token
-        const response = await fetch(import.meta.env.VITE_COURSE_API, {
+        const response = await fetch(`${import.meta.env.VITE_COURSE_API}/${courseId}/lessons`, {
                 method: "POST",
                 headers: {
                         "Authorization": `Bearer ${token}`
@@ -12,6 +12,6 @@ export const createCourse = async (formData: FormData) => {
         });
        
         if(!response.ok){ throw new Error(response.status.toString())}
-        const newCourse = await response.json()
-        return newCourse
+        const newLesson = await response.json()
+        return newLesson
 }

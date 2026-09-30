@@ -1,5 +1,5 @@
 import { fetchGet } from "@/utils/fetchUtils"
-import { useAuth } from "../auth/stores/authStore"
+import { useAuth } from "../../auth/stores/authStore"
 
 export const checkEnrollment = async(id: string) => {
         const token = useAuth.getState().auth?.access_token

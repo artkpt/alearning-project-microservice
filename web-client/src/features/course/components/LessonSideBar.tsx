@@ -1,14 +1,19 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { X, PlayCircle, BookOpen } from "lucide-react";
 import { Link, useParams } from "react-router";
+import type { courseData } from "../types/course.types";
 
-export function LessonSideBar({courseData}){
-  const { courseId, lessonId } = useParams();
-  const currentLessonId = Number(lessonId);
+type LessonSideBarProp = {
+  courseData: courseData
+}
+
+export function LessonSideBar({courseData}: LessonSideBarProp){
+  const { courseId, lessonId } = useParams()
+  const currentLessonId = Number(lessonId)
 
     return (
             <div className="w-80 bg-background border-r flex flex-col h-full z-10">
-              {/* Header (เหมือนเดิม) */}
+              {/* Header */}
               <div className="p-4 border-b flex items-center justify-between shrink-0">
                 <h1 className="text-lg font-bold leading-tight text-foreground">{courseData.name}</h1>
                 <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground shrink-0">

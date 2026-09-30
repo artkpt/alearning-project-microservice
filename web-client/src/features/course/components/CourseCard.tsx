@@ -1,6 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
+import type { Course } from "../types/course.types";
 
-export function CourseCard({course}){
+type CourseCardProp = {
+  course : Course
+}
+
+export function CourseCard({course}: CourseCardProp){
     return (
         <Card 
           className="overflow-hidden flex flex-col rounded-sm border shadow-sm hover:shadow-md transition-shadow"
