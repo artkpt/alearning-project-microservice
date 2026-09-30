@@ -1,14 +1,14 @@
-import { ArrowLeft, Loader, Upload, Video, Trash2, RefreshCw } from "lucide-react";
+import { ArrowLeft, Loader, Upload, Trash2, RefreshCw } from "lucide-react";
 import { Form, Link, redirect, useNavigation, useParams, type ActionFunctionArgs } from "react-router";
 import { useState, useEffect, useRef } from "react";
-import { createLesson } from "@/features/course/createLesson";
+import { createLesson } from "@/features/course/api/createLesson";
 
 export const createLessonAction = async ({ request, params }: ActionFunctionArgs) => {
     const courseId = params.courseId as string
     const payload = await request.formData();
 
     try {
-        let newLesson = await createLesson(courseId, payload);
+        await createLesson(courseId, payload);
 
         return redirect(`/admin/courses/${courseId}/lessons`);
     } catch(e) {

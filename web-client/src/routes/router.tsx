@@ -17,9 +17,8 @@ import LessonPage from "./courses/LessonPage";
 import LearningPage from "./courses/LearningPage";
 import { registerAction } from "./register/loaderAction";
 import { createCourseAction, CreateCoursePage } from "./courses/CreateCoursePage";
-import { AdminPage } from "./admin/AdminPage";
 import { AdminLayout } from "@/layouts/AdminLayout";
-import { AdminCourseListPage, adminCoursesLoader } from "./admin/AdminCourseListPage";
+import { AdminCourseListPage} from "./admin/AdminCourseListPage";
 import {  AdminLessonPage, courseLessonsLoader } from "./admin/AdminLessonPage";
 import { createLessonAction, CreateLessonPage } from "./admin/CreateLessonPage";
 

@@ -1,5 +1,5 @@
 import {LessonSideBar} from '@/features/course/components/LessonSideBar'
-import { Link, useLoaderData } from 'react-router';
+import { useLoaderData } from 'react-router';
 import { Outlet } from 'react-router';
 
 

@@ -1,13 +1,10 @@
 import { Link, redirect, useLoaderData, type LoaderFunctionArgs } from "react-router";
-import { 
-  ArrowLeft, Edit2, PlaySquare, BarChart, 
-  MessageSquare, Plus, Lock, Image as ImageIcon 
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import videoThumbnail from "@/assets/video-bg.jpg"
 import courseDefault from "@/assets/course-default-pic.jpg"
 import { useAuth } from "@/features/auth/stores/authStore";
-import { getCourseById } from "@/features/course/getCourseById";
-import { getLessonsByCourseId } from "@/features/course/getLessonsByCourseId";
+import { getCourseById } from "@/features/course/api/getCourseById";
+import { getLessonsByCourseId } from "@/features/course/api/getLessonsByCourseId";
 
 
 export const courseLessonsLoader = async({params}: LoaderFunctionArgs) => {

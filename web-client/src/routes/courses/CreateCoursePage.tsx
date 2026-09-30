@@ -1,7 +1,7 @@
-import { ArrowLeft, BarChart, Edit2, Loader, MessageCircle, MessageSquare, MoreVertical, PlaySquare, Settings, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
-import { Form, Link, redirect, useNavigation, type ActionFunctionArgs } from "react-router";
+import { Loader, Image as ImageIcon, Trash2 } from "lucide-react";
+import { Form, redirect, useNavigation, type ActionFunctionArgs } from "react-router";
 import { useState, useEffect, useRef } from "react";
-import { createCourse } from "@/features/course/createCourse";
+import { createCourse } from "@/features/course/api/createCourse";
 
 export const createCourseAction = async ({ request }: ActionFunctionArgs) => {
     console.log('action')

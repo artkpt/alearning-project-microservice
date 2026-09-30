@@ -1,31 +1,5 @@
 import { Link, useLoaderData } from "react-router";
-import { Plus, Edit, Trash2, Image as ImageIcon, ArrowDown } from "lucide-react";
-
-// (จำลองข้อมูล)
-export const adminCoursesLoader = async () => {
-    return {
-        courses: [
-            { 
-                id: 1, 
-                thumbnail: "/images/images.jpg", 
-                code: "ST247", 
-                name: "Introduction to Programming", 
-                description: "รายชื่อสมาชิกในกลุ่ม 1. อารีรัตน์ เหล่าหนาด เลขทะเบียนนักศึกษา 6209681128 2. กนกพร นะราวงษ์ เลขทะเบียน...",
-                createdAt: "24 Oct 2021",
-                updatedAt: "25 Oct 2021"
-            },
-            { 
-                id: 2, 
-                thumbnail: null, 
-                code: "MTH202", 
-                name: "Advanced Calculus", 
-                description: "Deep dive into integrals, derivatives, and infinite series for engineering students.",
-                createdAt: "10 Sep 2026",
-                updatedAt: "22 Sep 2026"
-            },
-        ]
-    };
-};
+import { Plus } from "lucide-react";
 
 export function AdminCourseListPage() {
   const { courses } = useLoaderData() as any;

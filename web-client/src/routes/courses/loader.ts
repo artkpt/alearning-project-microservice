@@ -1,10 +1,10 @@
 import { useAuth } from "@/features/auth/stores/authStore"
-import { checkEnrollment } from "@/features/course/checkEnrollment"
-import { getCourseById } from "@/features/course/getCourseById"
-import { getCourses } from "@/features/course/getCourses"
-import { getLessonsByCourseId } from "@/features/course/getLessonsByCourseId"
-import { getLessonById } from "@/features/course/getLessonById"
-import { postEnrollment } from "@/features/course/postEnrollment"
+import { checkEnrollment } from "@/features/course/api/checkEnrollment"
+import { getCourseById } from "@/features/course/api/getCourseById"
+import { getCourses } from "@/features/course/api/getCourses"
+import { getLessonsByCourseId } from "@/features/course/api/getLessonsByCourseId"
+import { getLessonById } from "@/features/course/api/getLessonById"
+import { postEnrollment } from "@/features/course/api/postEnrollment"
 import { createNote } from "@/features/note/api/createNote"
 import { fetchGet } from "@/utils/fetchUtils"
 import { redirect, type ActionFunctionArgs, type LoaderFunctionArgs } from "react-router"
@@ -52,7 +52,7 @@ export const getLessonOfCourse = async({params}: LoaderFunctionArgs) => {
 export const enrollment = async({params}: LoaderFunctionArgs) => {
     const id = params.courseId as string
     try{
-        const res = await postEnrollment(id)
+        await postEnrollment(id)
     }
     catch(e){
         console.log(e)

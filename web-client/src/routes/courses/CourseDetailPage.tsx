@@ -3,22 +3,16 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/stores/authStore";
 import { PlayCircle } from "lucide-react";
+import { type Lesson } from "@/features/course/types/course.types";
 
-interface Lesson {
-  id: number;
-  title: string;
-  order: number;
-  status: 'pending' | 'started' | 'completed'; // สถานะบทเรียน
-}
-
-interface CourseDetail {
-  id: number;
-  code: string;
-  name: string;
-  description: string;
-  thumbnailUrl: string;
-  lessons: Lesson[];
-}
+// interface CourseDetail {
+//   id: number;
+//   code: string;
+//   name: string;
+//   description: string;
+//   thumbnailUrl: string;
+//   lessons: Lesson[];
+// }
 
 const thumbnailUrl = "/course-default-pic.jpg"
 
@@ -71,7 +65,7 @@ export function CourseDetailPage() {
 
            
             <div className="grid grid-cols-1 gap-4">
-              {course.lessons.map((lesson) => {
+              {course.lessons.map((lesson: Lesson) => {
                 return (
                   
                   <Card key={lesson.id} className="overflow-hidden rounded-md border shadow-sm flex justify-between p-4 hover:shadow-md transition-shadow">

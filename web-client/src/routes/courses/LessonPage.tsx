@@ -1,7 +1,6 @@
 import { VideoSection } from "@/features/course/components/VideoSection";
 import { NotePanel } from "@/features/note/components/NotePanel";
 import { useLoaderData, useRouteLoaderData } from "react-router";
-import { Link } from "react-router";
 
 export default function LessonPage(){
     const {lesson} = useLoaderData()
