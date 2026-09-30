@@ -32,7 +32,7 @@ export async function fetchGet(
 ////////////////////////
 export async function fetchPost(
     url:string, 
-    body: Record<string, string | number | any[]> | null,
+    body: Record<string, any> | null,
     options: FetchOption = {},
 ){
     const {token} = options
@@ -74,7 +74,7 @@ export async function fetchDel(url:string, options: FetchOption = {},) {
 
 export async function fetchPut(
     url:string,
-    body: Record<string, string | number | any[]>,
+    body: Record<string, any>,
     options: FetchOption = {},
 ){
     const {token} = options
