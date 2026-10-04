@@ -11,7 +11,7 @@ export default function LessonPage(){
         <div className="flex-1 p-6 bg-white overflow-y-auto">
             <VideoSection 
                 title={lesson.title}
-                videoUrl={`/videos/${lesson.videoUrl}`}
+                videoUrl={`/uploads/videos/${lesson.videoUrl}`}
             />
             <NotePanel key={lesson.id} lesson={lesson} course={course}/>
             <div className="max-w-5xl mx-auto w-full flex justify-end mt-8">
