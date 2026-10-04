@@ -27,4 +27,24 @@ spring:
               filters:
                 - StripPrefix=2
 
+            - id: course-service-route
+              uri: http://course-service-prod:4001
+              predicates:
+                - Path=/api/course/**
+              filters:
+                - StripPrefix=2
+
+
+note:
+  service:
+    url: http://note-service-prod:3333
+
+
+auth:
+  service:
+    url: http://auth-service-prod:4000
+
+course:
+  service:
+    url: http://course-service-prod:4001
 
