@@ -31,9 +31,9 @@ services:
   auth-service-prod:
     container_name: auth-service-prod
     environment:
-      - spring_datasource_url=jdbc:mysql://auth-service-db-prod:3306/auth_service
-      - spring_datasource_username=alearning
-      - spring_datasource_password=alearning
+      - SPRING_PROFILES_ACTIVE=prod
+    env_file:
+      - auth-service/.env.production
     networks:
       - auth-service
       - gateway
@@ -44,6 +44,8 @@ services:
     depends_on:
       auth-service-db-prod:
         condition: service_healthy
+    volumes:
+      - ./private-key.pem:/app/private-key.pem
 
   auth-service-db-prod:
     container_name: auth-service-db-prod
@@ -62,6 +64,43 @@ services:
       retries: 10
     volumes:
       - auth-service-data:/var/lib/mysql
+  
+  course-service-prod:
+    container_name: course-service-prod
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    env_file:
+      - course-service/.env.production
+    networks:
+      - course-service
+      - gateway
+    image: alearning-course-service-prod
+    build:
+      context: .
+      dockerfile: course-service/Dockerfile
+    depends_on:
+      course-service-db-prod:
+        condition: service_healthy
+    volumes:
+      - ./uploads/images/:/app/uploads/images/
+      - ./uploads/videos/:/app/uploads/videos/
+
+  course-service-db-prod:
+    container_name: course-service-db-prod
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=alearning
+      - POSTGRES_PASSWORD=alearning
+      - POSTGRES_DB=course_service
+    networks:
+      - course-service
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U alearning -d course_service" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - course-service-data:/var/lib/postgresql/data
 
   web-client-prod:
     container_name: web-client-prod
@@ -72,6 +111,9 @@ services:
       context: .
       dockerfile: web-client/Dockerfile
       target: prod
+    volumes:
+      - ./uploads/images/:/usr/share/nginx/html/uploads/images/
+      - ./uploads/videos/:/usr/share/nginx/html/uploads/videos/
 
   api-gateway-prod:
     container_name: api-gateway-prod
@@ -83,8 +125,10 @@ services:
     build:
       context: .
       dockerfile: api-gateway/Dockerfile
-    ports:
-      - 8080:8080
+    depends_on:
+      - auth-service-prod
+      - note-service-prod
+      - course-service-prod
 
   reverse-proxy:
     ports:
@@ -105,6 +149,8 @@ networks:
   gateway:
   note-service:
   auth-service:
+  course-service:
 volumes:
   auth-service-data:
   note-service-data:
+  course-service-data:
