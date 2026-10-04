@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import type { Course } from "../types/course.types";
+import courseDefaultPic from "@/assets/course-default-pic.jpg"
 
 type CourseCardProp = {
   course : Course
@@ -11,8 +12,8 @@ export function CourseCard({course}: CourseCardProp){
           className="overflow-hidden flex flex-col rounded-sm border shadow-sm hover:shadow-md transition-shadow"
         >
           {course.thumbnailUrl ?
-            <img src={`/images/${course.thumbnailUrl}`} alt="course thumpnail" />
-            : <img src="/course-default-pic.jpg" alt="course thumpnail" />
+            <img src={`/uploads/images/${course.thumbnailUrl}`} alt="course thumpnail" />
+            : <img src={courseDefaultPic} alt="course thumpnail" />
           }
 
           <CardContent className="p-4 flex-1 bg-[#f9fafb]">

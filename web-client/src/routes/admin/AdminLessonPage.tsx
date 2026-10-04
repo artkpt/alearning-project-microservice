@@ -34,7 +34,7 @@ export function AdminLessonPage() {
           {/* Thumbnail */}
           <div className="w-full aspect-video bg-slate-200 flex items-center justify-center text-slate-400">
             {course.thumbnailUrl ? (
-               <img src={course.thumbnailUrl} alt={course.name} className="w-full h-full object-cover" />
+               <img src={`/uploads/images/${course.thumbnailUrl}`} alt={course.name} className="w-full h-full object-cover" />
             ) : (
                <img src={courseDefault} alt={course.name} className="w-full h-full object-cover" />
             )}
@@ -82,7 +82,7 @@ export function AdminLessonPage() {
                   {/* Video Details */}
                   <td className="py-3 px-2 align-top">
                       <a 
-                        href={`/videos/${lesson.videoUrl}`} 
+                        href={`/uploads/videos/${lesson.videoUrl}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block" 

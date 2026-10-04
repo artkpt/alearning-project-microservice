@@ -4,17 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/stores/authStore";
 import { PlayCircle } from "lucide-react";
 import { type Lesson } from "@/features/course/types/course.types";
-
-// interface CourseDetail {
-//   id: number;
-//   code: string;
-//   name: string;
-//   description: string;
-//   thumbnailUrl: string;
-//   lessons: Lesson[];
-// }
-
-const thumbnailUrl = "/course-default-pic.jpg"
+import courseDefaultPic from "@/assets/course-default-pic.jpg"
 
 export function CourseDetailPage() {
   const fetcher = useFetcher()
@@ -31,11 +21,10 @@ export function CourseDetailPage() {
           <div className="absolute right-6 top-8 w-4 h-4 bg-amber-400 rounded-full z-10" />
           <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-[#3993d4] opacity-90 z-0" />
 
-          <img 
-            src={thumbnailUrl} 
-            alt={course.name} 
-            className="relative z-10 w-full md:w-40 h-40 md:h-40 rounded-lg object-cover"
-          />
+          {course.thumbnailUrl ?
+            <img src={`/uploads/images/${course.thumbnailUrl}`} alt={course.name}  className="relative z-10 w-full md:w-40 h-40 md:h-40 rounded-lg object-cover"/>
+            : <img src={courseDefaultPic} alt={course.name}  className="relative z-10 w-full md:w-40 h-40 md:h-40 rounded-lg object-cover"/>
+          }
 
           {/* course intro */}
           <div className="relative z-10 flex flex-col justify-center flex-1">

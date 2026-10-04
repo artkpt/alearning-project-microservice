@@ -1,5 +1,6 @@
 import { Link, useLoaderData } from "react-router";
 import { Plus } from "lucide-react";
+import courseDefaultPic from "@/assets/course-default-pic.jpg"
 
 export function AdminCourseListPage() {
   const { courses } = useLoaderData() as any;
@@ -44,9 +45,9 @@ export function AdminCourseListPage() {
                     {/* Thumbnail ขนาดย่อส่วนและขอบมนเล็กน้อย */}
                     <div className="w-[120px] aspect-video shrink-0 bg-slate-100 rounded-[4px] overflow-hidden border border-slate-200 flex items-center justify-center">
                       {course.thumbnailUrl ? (
-                        <img src={`/images/${course.thumbnailUrl}`} alt={course.code} className="w-full h-full object-cover" />
+                        <img src={`/uploads/images/${course.thumbnailUrl}`} alt={course.code} className="w-full h-full object-cover" />
                       ) : (
-                        <img src="/images/course-default-pic.jpg" alt={course.code} className="w-full h-full object-cover" />
+                        <img src={courseDefaultPic} alt={course.code} className="w-full h-full object-cover" />
                       )}
                     </div>
                     
